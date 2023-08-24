@@ -17,16 +17,24 @@
     ],
 
 
-    "Fill-ups": [
+    "Events": [
         {
             "id": 1,
+            "type": "Fill-up",
             "vehicle": 2,
             "dateTime": "2023-08-01T10:10:10Z",
             "station": "ABC Koulukatu",
             "fuel": "petrol/98",
             "volume": 25.45,
             "pricePerUnit": 2.202,
-            "priceTotal": 51.12
+            "totalCost": 51.12
+        },
+        {
+            "id": 2,
+            "type": "Insurance payment",
+            "vehicle": 2,
+            "dateTime": "2023-08-01T10:10:10Z",
+            "totalCost": 200.00
         }
     ]
 }
