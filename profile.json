@@ -1,0 +1,32 @@
+{
+    "Name": "Juha Rainto",
+
+    "Vehicles": [
+        {
+            "id": 1,
+            "name": "Fiat Punto",
+            "type": "car",
+            "fule": "diesel"
+        },
+        {
+            "id": 2,
+            "name": "Kia Sorento",
+            "type": "car",
+            "fule": "petrol"
+        }
+    ],
+
+
+    "Fill-ups": [
+        {
+            "id": 1,
+            "vehicle": 2,
+            "dateTime": "2023-08-01T10:10:10Z",
+            "station": "ABC Koulukatu",
+            "fuel": "petrol/98",
+            "volume": 25.45,
+            "pricePerUnit": 2.202,
+            "priceTotal": 51.12
+        }
+    ]
+}
