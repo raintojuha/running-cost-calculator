@@ -2,10 +2,13 @@ package com.juharainto.runcostcalc;
 
 
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -21,7 +24,11 @@ public class ApplicationFrame extends JFrame implements ActionListener{
     public static final int LOAD = 0;
     public static final int SAVE = 1;
 
+    public static final int WIDTH = 600;
+    public static final int HEIGHT = 600;
+
     public static JSONObject WORKING_PROJECT = new JSONObject();
+    public static File WORKING_FILE = new File("project.json");
 
     // Initialize empty JMenu components
     JMenuBar menuBar;
@@ -29,16 +36,17 @@ public class ApplicationFrame extends JFrame implements ActionListener{
     JMenuItem openFileMenuItem;
     JMenu editMenu;
     JMenu helpMenu;
+    JComboBox vehicleList;
 
     JFileChooser fileChooser;
     
     ApplicationFrame() {
-        this.add(new ApplicationPanel());
+        this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         this.setTitle("Calculator");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
+        //this.add(new ApplicationPanel());
         this.pack();
-        //this.setVisible(true);
         this.setLocationRelativeTo(null);
 
         this.setLayout(new FlowLayout());
@@ -67,22 +75,48 @@ public class ApplicationFrame extends JFrame implements ActionListener{
         this.setJMenuBar(menuBar);
         this.setVisible(true);
 
+        if(!WORKING_FILE.exists()) {
+            // Wha to do if no project file is in memory
+            System.out.println("No project open");
+        }
+
+        String[] petStrings = { "Bird", "Cat", "Dog", "Rabbit", "Pig" };
+        String[] names = FileHandler.listVehicleNames();
+        System.out.println(names);
+
+        //Create the combo box, select item at index 4.
+        //Indices start at 0, so 4 specifies the pig.
+        vehicleList = new JComboBox(names);
+        this.add(vehicleList);
+        vehicleList.setSelectedIndex(0);
+        vehicleList.addActionListener(this);
+        this.setVisible(true);     
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // If "Open File..." is triggered
-        if(e.getSource()==openFileMenuItem){
+        /** 
+         * "Open File..." is triggered
+        */ 
+        if(e.getSource() == openFileMenuItem){
             System.out.println("Open File... called");
             // Wait for user input and get selected file path
             String filePath = FileHandler.chooseFilePath(this);
             System.out.println(filePath);
             // Read JSON at file path
             if(filePath != null){
-                WORKING_PROJECT = FileHandler.readJSONFile(filePath);
+                JSONObject obje = FileHandler.readJSONFile(filePath);
                 String name = (String) WORKING_PROJECT.get("name");
                 System.out.println(name);
+                FileHandler.writeJSONToFile(obje, "project.json");
             }   
+        }
+
+        /** 
+         * Selected vehicle is changed
+        */
+        if(e.getSource() == vehicleList) {
+            FileHandler.getVehicleName(1);
         }
     }
 }

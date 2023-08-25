@@ -3,7 +3,10 @@ package com.juharainto.runcostcalc;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -20,8 +23,8 @@ public class FileHandler {
 
     /**
      * 
-     * @param parent
-     * @return
+     * @param parent JFrame for dialog
+     * @return (String) Absolute file path of user selected file. Null if action is cancelled.
      */
     public static String chooseFilePath(JFrame parent) {
         // Add a filter for JSON files
@@ -80,5 +83,49 @@ public class FileHandler {
         }
 
         return null;
+    }
+
+    public static void writeJSONToFile(JSONObject data, String path) {
+        try (PrintWriter out = new PrintWriter(new FileWriter(path))){
+            out.write(data.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static String getVehicleName(int id) {
+        // Get vehicle data from JSON file
+        JSONArray vehicles = (JSONArray) readJSONFile(App.WORKING_FILE).get("vehicles");
+
+        for(int i = 0; i < vehicles.size(); i++) {
+            // Current vehicle
+            JSONObject current = (JSONObject) vehicles.get(i);
+            // If current vehicle id matches search term
+            if(current.get("id").toString().equals(String.valueOf(id))) {
+                return current.get("name").toString();
+            }
+        }
+        return null;
+    }
+
+    public static String[] listVehicleNames() {
+        ArrayList<String> names = new ArrayList<String>();
+
+        // Get vehicle data from JSON file
+        JSONArray vehicles = (JSONArray) readJSONFile(App.WORKING_FILE).get("vehicles");
+
+        for(int i = 0; i < vehicles.size(); i++) {
+            // Current vehicle
+            JSONObject current = (JSONObject) vehicles.get(i);
+            names.add(current.get("name").toString());
+        }
+
+        String[] str = new String[names.size()];
+ 
+        for (int i = 0; i < names.size(); i++) {
+            str[i] = names.get(i);
+        }
+
+        return str;
     }
 }
