@@ -21,6 +21,8 @@ public class ApplicationFrame extends JFrame implements ActionListener{
     public static final int LOAD = 0;
     public static final int SAVE = 1;
 
+    public static JSONObject WORKING_PROJECT = new JSONObject();
+
     // Initialize empty JMenu components
     JMenuBar menuBar;
     JMenu fileMenu;
@@ -72,60 +74,15 @@ public class ApplicationFrame extends JFrame implements ActionListener{
         // If "Open File..." is triggered
         if(e.getSource()==openFileMenuItem){
             System.out.println("Open File... called");
-
+            // Wait for user input and get selected file path
             String filePath = FileHandler.chooseFilePath(this);
             System.out.println(filePath);
-            JSONObject objec = FileHandler.readJSONFile(filePath);
-            String name = (String) objec.get("name");
-            System.out.println(name);
-
-            //System.out.println(FileHandler.chooseFilePath(this));
-
-
-
-
-            /*
-            // New File Chooser
-            fileChooser = new JFileChooser();
-
-            // Add a filter for JSON files
-            fileChooser.setFileFilter(new FileFilter() {
-                public String getDescription() {
-                    return "JSON Files (*.json)";
-                }
-             
-                public boolean accept(File f) {
-                    if (f.isDirectory()) {
-                        return true;
-                    } else {
-                        String filename = f.getName().toLowerCase();
-                        return filename.endsWith(".json");
-                    }
-                }
-            });
-
-            int returnVal = fileChooser.showOpenDialog(this);
-
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
-                // Store the selected file
-                File file = fileChooser.getSelectedFile();
-                
-                System.out.println("Opening: " + file.getName() + file.getAbsolutePath() + file.getPath() + ".");
-            } else {
-                System.out.println("Open command cancelled by user.");
-            }
-/* 
-            FileDialog d = new FileDialog(this, "Open File", LOAD);
-            d.setFile(".json");
-            d.setFilenameFilter(new FilenameFilter() {
-                @Override
-                public boolean accept(File dir, String name) {
-                    return name.endsWith(".json");
-                }
-            });
-            d.setVisible(true);
-            */
-            
+            // Read JSON at file path
+            if(filePath != null){
+                WORKING_PROJECT = FileHandler.readJSONFile(filePath);
+                String name = (String) WORKING_PROJECT.get("name");
+                System.out.println(name);
+            }   
         }
     }
 }
