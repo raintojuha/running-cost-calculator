@@ -108,29 +108,39 @@ public class FileHandler {
         return null;
     }
 
+    /**
+     * Returns all vehicle data in a JSON object
+     * @param index Vehicle index in JSON Array
+     * @return JSONObject with all vehicle data
+     */
     public static JSONObject getVehicleDataByIndex(int index) {
         // Get vehicle data from JSON file
         JSONArray vehicles = (JSONArray) readJSONFile(App.WORKING_FILE).get("vehicles");
         JSONObject vehicle = (JSONObject) vehicles.get(index);
-
         return vehicle;
+    } // WHAT if the index is out of bounds? Does this need a catch?
 
-    }
-
+    /**
+     * Returns an array of all vehicle names
+     * @return String array of names
+     */
     public static String[] listVehicleNames() {
+        // Create an empty list for names
         ArrayList<String> names = new ArrayList<String>();
 
         // Get vehicle data from JSON file
         JSONArray vehicles = (JSONArray) readJSONFile(App.WORKING_FILE).get("vehicles");
 
+        // Add all vehicle names to list
         for(int i = 0; i < vehicles.size(); i++) {
-            // Current vehicle
             JSONObject current = (JSONObject) vehicles.get(i);
             names.add(current.get("name").toString());
         }
 
+        // Create an array for names
         String[] str = new String[names.size()];
  
+        // Add vehicle names to array
         for (int i = 0; i < names.size(); i++) {
             str[i] = names.get(i);
         }
