@@ -38,7 +38,8 @@ public class ApplicationFrame extends JFrame implements ActionListener{
     JMenuItem openFileMenuItem;
     JMenu editMenu;
     JMenu helpMenu;
-    JComboBox vehicleList;
+    JComboBox<String> vehicleList;
+    
 
     JFileChooser fileChooser;
     
@@ -81,16 +82,18 @@ public class ApplicationFrame extends JFrame implements ActionListener{
             System.out.println("No project open");
         }
 
-        String[] petStrings = { "Bird", "Cat", "Dog", "Rabbit", "Pig" };
+        // Get vehicle names and populate the JComboBox
         String[] names = FileHandler.listVehicleNames();
+        vehicleList = new JComboBox<String>(names);
 
-        //Create the combo box, select item at index 4.
-        //Indices start at 0, so 4 specifies the pig.
-        vehicleList = new JComboBox(names);
+        // Add components to frame
         this.add(vehicleList);
         this.add(new ApplicationPanel());
+        
+        // Select first JComboBox element. Add action listener
         vehicleList.setSelectedIndex(0);
         vehicleList.addActionListener(this);
+
         this.setVisible(true);
     }
 
