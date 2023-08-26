@@ -47,7 +47,6 @@ public class ApplicationFrame extends JFrame implements ActionListener{
         this.setTitle("Calculator");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
-        this.add(new ApplicationPanel());
         this.pack();
         this.setLocationRelativeTo(null);
 
@@ -89,6 +88,7 @@ public class ApplicationFrame extends JFrame implements ActionListener{
         //Indices start at 0, so 4 specifies the pig.
         vehicleList = new JComboBox(names);
         this.add(vehicleList);
+        this.add(new ApplicationPanel());
         vehicleList.setSelectedIndex(0);
         vehicleList.addActionListener(this);
         this.setVisible(true);
@@ -115,8 +115,9 @@ public class ApplicationFrame extends JFrame implements ActionListener{
          * Selected vehicle is changed
         */
         if(e.getSource() == vehicleList) {
-            FileHandler.getVehicleName(1);
+            // Update current vehicle index
             CURRENT_VEHICLE_INDEX = vehicleList.getSelectedIndex();
+            // Update information on screen
             ApplicationPanel.updateVehicleInfoOnScreen();
 
         }
