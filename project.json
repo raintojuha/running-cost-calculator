@@ -22,7 +22,7 @@
     "name": "Juha Rainto",
     "vehicles": [
         {
-            "fuel": "diesel",
+            "fuel": "Petrol",
             "id": 1,
             "name": "Fiat Punto",
             "type": "car"
@@ -30,20 +30,20 @@
         {
             "fuel": "diesel",
             "id": 1,
-            "name": "Kia Rio",
-            "type": "car"
+            "name": "Volkswagen Transporter",
+            "type": "van"
         },
         {
-            "fuel": "diesel",
+            "fuel": "Petrol",
             "id": 1,
-            "name": "Mercedes A-Class",
+            "name": "Kia Rio",
             "type": "car"
         },
         {
             "fuel": "petrol",
             "id": 2,
-            "name": "Kia Sorento",
-            "type": "car"
+            "name": "Kawasaki Ninja",
+            "type": "motorcycle"
         }
     ]
 }

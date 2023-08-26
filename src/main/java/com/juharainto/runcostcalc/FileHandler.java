@@ -108,6 +108,15 @@ public class FileHandler {
         return null;
     }
 
+    public static JSONObject getVehicleDataByIndex(int index) {
+        // Get vehicle data from JSON file
+        JSONArray vehicles = (JSONArray) readJSONFile(App.WORKING_FILE).get("vehicles");
+        JSONObject vehicle = (JSONObject) vehicles.get(index);
+
+        return vehicle;
+
+    }
+
     public static String[] listVehicleNames() {
         ArrayList<String> names = new ArrayList<String>();
 

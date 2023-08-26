@@ -30,6 +30,8 @@ public class ApplicationFrame extends JFrame implements ActionListener{
     public static JSONObject WORKING_PROJECT = new JSONObject();
     public static File WORKING_FILE = new File("project.json");
 
+    public static int CURRENT_VEHICLE_INDEX = 0;
+
     // Initialize empty JMenu components
     JMenuBar menuBar;
     JMenu fileMenu;
@@ -45,7 +47,7 @@ public class ApplicationFrame extends JFrame implements ActionListener{
         this.setTitle("Calculator");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
-        //this.add(new ApplicationPanel());
+        this.add(new ApplicationPanel());
         this.pack();
         this.setLocationRelativeTo(null);
 
@@ -82,7 +84,6 @@ public class ApplicationFrame extends JFrame implements ActionListener{
 
         String[] petStrings = { "Bird", "Cat", "Dog", "Rabbit", "Pig" };
         String[] names = FileHandler.listVehicleNames();
-        System.out.println(names);
 
         //Create the combo box, select item at index 4.
         //Indices start at 0, so 4 specifies the pig.
@@ -90,7 +91,7 @@ public class ApplicationFrame extends JFrame implements ActionListener{
         this.add(vehicleList);
         vehicleList.setSelectedIndex(0);
         vehicleList.addActionListener(this);
-        this.setVisible(true);     
+        this.setVisible(true);
     }
 
     @Override
@@ -102,12 +103,10 @@ public class ApplicationFrame extends JFrame implements ActionListener{
             System.out.println("Open File... called");
             // Wait for user input and get selected file path
             String filePath = FileHandler.chooseFilePath(this);
-            System.out.println(filePath);
             // Read JSON at file path
             if(filePath != null){
                 JSONObject obje = FileHandler.readJSONFile(filePath);
-                String name = (String) WORKING_PROJECT.get("name");
-                System.out.println(name);
+                // Overwrite project.json at App root
                 FileHandler.writeJSONToFile(obje, "project.json");
             }   
         }
@@ -117,6 +116,9 @@ public class ApplicationFrame extends JFrame implements ActionListener{
         */
         if(e.getSource() == vehicleList) {
             FileHandler.getVehicleName(1);
+            CURRENT_VEHICLE_INDEX = vehicleList.getSelectedIndex();
+            ApplicationPanel.updateVehicleInfoOnScreen();
+
         }
     }
 }
