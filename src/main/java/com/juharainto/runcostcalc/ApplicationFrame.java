@@ -88,7 +88,7 @@ public class ApplicationFrame extends JFrame implements ActionListener{
 
         // Add components to frame
         this.add(vehicleList);
-        this.add(new ApplicationPanel());
+        this.add(new VehicleInfoPanel());
         
         // Select first JComboBox element. Add action listener
         vehicleList.setSelectedIndex(0);
@@ -121,7 +121,7 @@ public class ApplicationFrame extends JFrame implements ActionListener{
             // Update current vehicle index
             CURRENT_VEHICLE_INDEX = vehicleList.getSelectedIndex();
             // Update information on screen
-            ApplicationPanel.updateVehicleInfoOnScreen();
+            VehicleInfoPanel.updateVehicleInfoOnScreen();
 
         }
     }

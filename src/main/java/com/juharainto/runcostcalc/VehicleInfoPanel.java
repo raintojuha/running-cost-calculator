@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import org.json.simple.JSONObject;
 
 
-public class ApplicationPanel extends JPanel {
+public class VehicleInfoPanel extends JPanel {
 
     static final int SCREEN_WIDTH = 600;
     static final int SCREEN_HEIGHT = 200;
@@ -20,7 +20,7 @@ public class ApplicationPanel extends JPanel {
     String vehicleInfo;
 
 
-    ApplicationPanel() {
+    VehicleInfoPanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH,SCREEN_HEIGHT));
         this.setBackground(new Color(100, 100, 100));
 
