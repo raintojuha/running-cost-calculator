@@ -83,16 +83,21 @@ public class ApplicationFrame extends JFrame implements ActionListener{
         }
 
         // Get vehicle names and populate the JComboBox
+        //String[] names = FileHandler.listVehicleNames();
+        //vehicleList = new JComboBox<String>(names);
         String[] names = FileHandler.listVehicleNames();
         vehicleList = new JComboBox<String>(names);
+        vehicleList.setSelectedIndex(0);
+        vehicleList.addActionListener(this);
+        this.add(vehicleList);
 
         // Add components to frame
-        this.add(vehicleList);
+        //his.add(vehicleList);
         this.add(new VehicleInfoPanel());
         
         // Select first JComboBox element. Add action listener
-        vehicleList.setSelectedIndex(0);
-        vehicleList.addActionListener(this);
+        //vehicleList.setSelectedIndex(0);
+        //vehicleList.addActionListener(this);
 
         this.setVisible(true);
     }
@@ -103,26 +108,64 @@ public class ApplicationFrame extends JFrame implements ActionListener{
          * "Open File..." is triggered
         */ 
         if(e.getSource() == openFileMenuItem){
-            System.out.println("Open File... called");
-            // Wait for user input and get selected file path
-            String filePath = FileHandler.chooseFilePath(this);
-            // Read JSON at file path
-            if(filePath != null){
-                JSONObject obje = FileHandler.readJSONFile(filePath);
-                // Overwrite project.json at App root
-                FileHandler.writeJSONToFile(obje, "project.json");
-            }   
+            openProjectFile();
         }
 
         /** 
          * Selected vehicle is changed
         */
         if(e.getSource() == vehicleList) {
-            // Update current vehicle index
-            CURRENT_VEHICLE_INDEX = vehicleList.getSelectedIndex();
-            // Update information on screen
-            VehicleInfoPanel.updateVehicleInfoOnScreen();
+            if( ! "cmdIgnore".equals(e.getActionCommand())) {
+                // Update current vehicle index
+                CURRENT_VEHICLE_INDEX = vehicleList.getSelectedIndex();
+                // Update information on screen
+                VehicleInfoPanel.updateVehicleInfoOnScreen();
+            }
 
         }
+    }
+
+    /**
+     * 
+     */
+    public void openProjectFile() {
+        System.out.println("Open File... called");
+        // Wait for user input and get selected file path
+        String filePath = FileHandler.chooseFilePath(this);
+        // Read JSON at file path
+        if(filePath != null){
+            // Get JSON obect from selected file
+            JSONObject obje = FileHandler.readJSONFile(filePath);
+            // Overwrite project.json at App root
+            FileHandler.writeJSONToFile(obje, "project.json");
+
+            // When project file is loaded
+            updateVehicleDropDown();
+            
+        }
+    }
+
+    /**
+     * 
+     */
+    public void updateVehicleDropDown() {
+        // Get vehicle names and populate the JComboBox
+        String[] names = FileHandler.listVehicleNames();
+
+        // Disable Action Listener for JCombooBox
+        String oldCommand = vehicleList.getActionCommand();
+        vehicleList.setActionCommand("cmdIgnore");
+
+        vehicleList.removeAllItems();
+        for(int i = 0; i < names.length; i++){
+            System.out.println(names[i]);
+            vehicleList.addItem(names[i]);
+        }
+
+        // Enable Action Listener
+        vehicleList.setActionCommand(oldCommand);
+
+        // Select first JComboBox element
+        vehicleList.setSelectedIndex(0);
     }
 }
