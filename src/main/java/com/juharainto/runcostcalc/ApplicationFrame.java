@@ -152,11 +152,23 @@ public class ApplicationFrame extends JFrame implements ActionListener{
         // Get vehicle names and populate the JComboBox
         String[] names = FileHandler.listVehicleNames();
 
-        // Disable Action Listener for JCombooBox
+
+        /**
+         * Disable Action Listener for JCombooBox
+         * 
+         * This is done because the removeAllItems action wouold
+         * trigger the Action Listener and that would in turn trigger
+         * updateVehicleInfoOnScreen, which then would try to fetch the
+         * currently selected index of the ComboBox. The ComboBox being empty
+         * would return an index of -1 and this would cause an OutOfBounds exception.
+         */
         String oldCommand = vehicleList.getActionCommand();
         vehicleList.setActionCommand("cmdIgnore");
 
+        // Empty JComboBox
         vehicleList.removeAllItems();
+
+        // Add new vehicles to JComoboBox
         for(int i = 0; i < names.length; i++){
             System.out.println(names[i]);
             vehicleList.addItem(names[i]);
