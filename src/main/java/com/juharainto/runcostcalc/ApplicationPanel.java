@@ -7,7 +7,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-
 import org.json.simple.JSONObject;
 
 
@@ -39,7 +38,7 @@ public class ApplicationPanel extends JPanel {
         JSONObject vehicle = FileHandler.getVehicleDataByIndex(ApplicationFrame.CURRENT_VEHICLE_INDEX);
 
         String vehicleInfo = "<html>\n"
-                    + "     <body>\n"
+                    + "     <body style='text-align: center;'>\n"
                     + "         <h3>"+ vehicle.get("name") +"</h3>\n"
                     + "         <p><b>Fuel: </b>"+ capitalizeWord(vehicle.get("fuel").toString()) +"</p>\n"
                     + "     </body>\n"
